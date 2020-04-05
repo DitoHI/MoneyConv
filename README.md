@@ -1,6 +1,6 @@
 ## Getting Started
 
-The project requirements you need to start the project are:
+The requirements you need to start the project are:
 - JVM 1.8
 - IDE: Android Studio (__recommended__) or Intellij IDEA 
 

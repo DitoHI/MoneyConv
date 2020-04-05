@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">スマート通貨コンバーター</string>
+
+    <string name="tab_exchange_currency">通貨両替</string>
+    <string name="tab_currency_rates">通貨レート</string>
+</resources>
