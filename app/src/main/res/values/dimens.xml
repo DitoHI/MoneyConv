@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Padding -->
+    <dimen name="paddingXs">12dp</dimen>
+    <dimen name="paddingMd">24dp</dimen>
+
+    <!-- Spacing -->
+    <dimen name="spacingXs">2dp</dimen>
+    <dimen name="spacingSm">4dp</dimen>
+
+    <!-- Font Size -->
+    <dimen name="fontSizeSm">16sp</dimen>
+    <dimen name="fontSizeMd">24sp</dimen>
+
+    <!-- Margin -->
+    <dimen name="marginXs">5dp</dimen>
+
+    <!-- Default -->
+    <integer name="weightDefault">1</integer>
+
+    <!-- Size -->
+    <dimen name="widthSm">100dp</dimen>
+
+</resources>

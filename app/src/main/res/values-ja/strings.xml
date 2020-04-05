@@ -4,4 +4,6 @@
 
     <string name="tab_exchange_currency">通貨両替</string>
     <string name="tab_currency_rates">通貨レート</string>
+
+    <string name="log_default_description">デフォルトの説明</string>
 </resources>

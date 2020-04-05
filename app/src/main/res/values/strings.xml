@@ -4,6 +4,5 @@
     <string name="tab_exchange_currency">Exchange Currency</string>
     <string name="tab_currency_rates">Currency Rates</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="log_default_description">Default Description</string>
 </resources>
