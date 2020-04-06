@@ -3,6 +3,7 @@
 
     <!-- Padding -->
     <dimen name="paddingXs">12dp</dimen>
+    <dimen name="paddingSm">18dp</dimen>
     <dimen name="paddingMd">24dp</dimen>
     <dimen name="paddingLg">36dp</dimen>
 
