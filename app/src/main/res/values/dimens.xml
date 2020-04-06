@@ -4,14 +4,17 @@
     <!-- Padding -->
     <dimen name="paddingXs">12dp</dimen>
     <dimen name="paddingMd">24dp</dimen>
+    <dimen name="paddingLg">36dp</dimen>
 
     <!-- Spacing -->
     <dimen name="spacingXs">2dp</dimen>
     <dimen name="spacingSm">4dp</dimen>
+    <dimen name="spacingMd">8dp</dimen>
 
     <!-- Font Size -->
     <dimen name="fontSizeSm">16sp</dimen>
     <dimen name="fontSizeMd">24sp</dimen>
+    <dimen name="fontSizeLg">36sp</dimen>
 
     <!-- Margin -->
     <dimen name="marginXs">5dp</dimen>
@@ -21,5 +24,10 @@
 
     <!-- Size -->
     <dimen name="widthSm">100dp</dimen>
+    <dimen name="iconSizeMd">32dp</dimen>
+    <dimen name="iconSizeLg">64dp</dimen>
+
+    <!-- Radius -->
+    <dimen name="radiusMd">32dp</dimen>
 
 </resources>

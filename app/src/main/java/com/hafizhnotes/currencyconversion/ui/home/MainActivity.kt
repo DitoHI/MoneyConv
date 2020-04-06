@@ -9,6 +9,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.hafizhnotes.currencyconversion.R
 import com.hafizhnotes.currencyconversion.ui.currency_rates.CurrentRatesFragment
 import com.hafizhnotes.currencyconversion.ui.exchange_currency.ExchangeCurrencyFragment
+import com.mikepenz.iconics.Iconics
 
 private const val NUM_PAGES = 2
 
@@ -19,8 +20,10 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewPagerHome = findViewById(R.id.vp2_home)
+        // Setup icon.
+        Iconics.init(applicationContext)
 
+        viewPagerHome = findViewById(R.id.vp2_home)
         val pagerAdapterHome = MainActivityAdapter(this)
         viewPagerHome.adapter = pagerAdapterHome
 
@@ -28,8 +31,8 @@ class MainActivity : FragmentActivity() {
         val tabHome: TabLayout = findViewById(R.id.tab_home)
         TabLayoutMediator(tabHome, viewPagerHome) { tab, position ->
             when (position) {
-                1 -> tab.text = resources.getString(R.string.tab_exchange_currency)
-                else -> tab.text = resources.getString(R.string.tab_currency_rates)
+                1 -> tab.text = resources.getString(R.string.tab_currency_rates)
+                else -> tab.text = resources.getString(R.string.tab_exchange_currency)
             }
         }.attach()
     }

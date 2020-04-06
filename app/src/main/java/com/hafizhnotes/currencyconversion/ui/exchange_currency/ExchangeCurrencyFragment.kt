@@ -34,14 +34,25 @@ class ExchangeCurrencyFragment : Fragment() {
 
         // Testing.
         // Spinner.
-        val dataAdapter =
+        val fromCurrencyAdapter =
             ArrayAdapter(
                 activity!!.applicationContext,
                 R.layout.spinner_common_text,
                 listOf("USD", "IDR")
             )
 
-        dataAdapter.setDropDownViewResource(R.layout.spinner_common_dropdown)
-        view.sp_currency_from.adapter = dataAdapter
+        fromCurrencyAdapter.setDropDownViewResource(R.layout.spinner_common_dropdown)
+        view.sp_currency_from.adapter = fromCurrencyAdapter
+
+
+        val toCurrencyAdapter =
+            ArrayAdapter(
+                activity!!.applicationContext,
+                R.layout.spinner_common_text,
+                listOf("USD", "IDR")
+            )
+
+        toCurrencyAdapter.setDropDownViewResource(R.layout.spinner_common_dropdown)
+        view.sp_currency_to.adapter = toCurrencyAdapter
     }
 }

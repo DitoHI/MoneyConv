@@ -6,4 +6,6 @@
     <string name="tab_currency_rates">通貨レート</string>
 
     <string name="log_default_description">デフォルトの説明</string>
+
+    <string name="btn_convert">変換</string>
 </resources>

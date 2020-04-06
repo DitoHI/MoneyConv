@@ -10,4 +10,4 @@
     android:textColor="@color/black01"
     android:textSize="@dimen/fontSizeMd"
     android:textStyle="bold"
-    tools:ignore="RtlSymmetry"></TextView>
+    tools:ignore="RtlSymmetry" />
