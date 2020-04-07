@@ -7,4 +7,4 @@
     android:paddingVertical="@dimen/spacingSm"
     android:singleLine="true"
     android:textColor="@color/black01"
-    android:textSize="@dimen/fontSizeSm" />
+    android:textSize="@dimen/fontSizeMd" />

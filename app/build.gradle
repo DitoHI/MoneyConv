@@ -50,4 +50,5 @@ dependencies {
     implementation "com.mikepenz:iconics-core:5.0.1"
     implementation "com.mikepenz:iconics-views:5.0.1"
     implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.6-kotlin@aar'
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 }

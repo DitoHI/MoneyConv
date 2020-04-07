@@ -1,6 +1,5 @@
 package com.hafizhnotes.currencyconversion.ui.exchange_currency
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -33,6 +32,10 @@ class ExchangeCurrencyFragment : Fragment() {
         if (activity == null) return
 
         // Testing.
+        // Skeleton.
+        view.sfl_exchange_loading.startShimmer()
+
+        // Testing.
         // Spinner.
         val fromCurrencyAdapter =
             ArrayAdapter(
@@ -43,8 +46,6 @@ class ExchangeCurrencyFragment : Fragment() {
 
         fromCurrencyAdapter.setDropDownViewResource(R.layout.spinner_common_dropdown)
         view.sp_currency_from.adapter = fromCurrencyAdapter
-
-
         val toCurrencyAdapter =
             ArrayAdapter(
                 activity!!.applicationContext,
