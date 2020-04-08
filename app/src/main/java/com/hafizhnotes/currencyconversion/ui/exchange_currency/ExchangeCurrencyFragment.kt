@@ -11,8 +11,13 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.TextView.OnEditorActionListener
 import androidx.fragment.app.Fragment
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.hafizhnotes.currencyconversion.R
+import com.hafizhnotes.currencyconversion.data.constant.TestingConstant
+import com.hafizhnotes.currencyconversion.data.vo.CurrencyListResponse
 import kotlinx.android.synthetic.main.fragment_exchange_currency.view.*
+import java.lang.Exception
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
@@ -47,7 +52,7 @@ class ExchangeCurrencyFragment : Fragment() {
         rootView.et_currency_from.setOnFocusChangeListener { _, b ->
             if (b) return@setOnFocusChangeListener
 
-            val currency = rootView.sp_currency_from.selectedItem.toString()
+            val currency = rootView.sp_currency_from.selectedItem.toString().take(3)
             val outputCurrencyFormat =
                 formatCurrencyInput(currency, rootView.et_currency_from.text)
 
@@ -55,14 +60,32 @@ class ExchangeCurrencyFragment : Fragment() {
         }
 
         // Remove focus when enter is clicked.
-        rootView.et_currency_from.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                hideSoftKeyboard(activity!!)
-                rootView.et_currency_from.clearFocus()
-                return@OnEditorActionListener true
-            }
-            false
-        })
+        rootView
+            .et_currency_from
+            .setOnEditorActionListener(
+                OnEditorActionListener { _, actionId, _ ->
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        hideSoftKeyboard(activity!!)
+                        rootView.et_currency_from.clearFocus()
+                        return@OnEditorActionListener true
+                    }
+                    false
+                })
+
+        // Testing Data.
+        val testResp = CurrencyListResponse(
+            success = true,
+            currencies = Gson().fromJson(TestingConstant.CURRENCY_LIST_STR, JsonObject::class.java)
+        )
+        val currencyLabelList = testResp.currencies.keySet().map {
+            val countryName =
+                testResp
+                    .currencies[it]
+                    .toString()
+                    .replace("\"", "")
+
+            "$it - $countryName"
+        }.toList()
 
         // Testing.
         // Skeleton.
@@ -75,16 +98,17 @@ class ExchangeCurrencyFragment : Fragment() {
             ArrayAdapter(
                 rootView.context,
                 R.layout.spinner_common_text,
-                listOf("USD", "IDR")
+                currencyLabelList
             )
 
         fromCurrencyAdapter.setDropDownViewResource(R.layout.spinner_common_dropdown)
         rootView.sp_currency_from.adapter = fromCurrencyAdapter
+
         val toCurrencyAdapter =
             ArrayAdapter(
                 rootView.context,
                 R.layout.spinner_common_text,
-                listOf("USD", "IDR")
+                listOf("USD - United States", "IDR - Indonesia")
             )
 
         toCurrencyAdapter.setDropDownViewResource(R.layout.spinner_common_dropdown)
@@ -103,14 +127,22 @@ class ExchangeCurrencyFragment : Fragment() {
 
         val format = NumberFormat.getCurrencyInstance()
         format.maximumFractionDigits = 0
-        format.currency = Currency.getInstance(source.toUpperCase(Locale.ROOT))
 
         // Remove the symbol of currency.
         val decimalSymbols = (format as DecimalFormat).decimalFormatSymbols
         decimalSymbols.currencySymbol = ""
-        format.decimalFormatSymbols = decimalSymbols
 
-        return format.format(inputDouble)
+        return try {
+            format.currency = Currency.getInstance(source.toUpperCase(Locale.ROOT))
+            format.decimalFormatSymbols = decimalSymbols
+
+            format.format(inputDouble)
+        } catch (e: Exception) {
+            format.currency = Currency.getInstance(Locale.US)
+            format.decimalFormatSymbols = decimalSymbols
+
+            format.format(inputDouble)
+        }
     }
 
     private fun setupUI(view: View) {

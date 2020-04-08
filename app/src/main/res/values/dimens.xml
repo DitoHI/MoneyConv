@@ -22,6 +22,8 @@
 
     <!-- Default -->
     <integer name="weightDefault">1</integer>
+    <dimen name="spinnerWrapperMd">200dp</dimen>
+    <dimen name="spinnerChildWrapperMd">140dp</dimen>
 
     <!-- Size -->
     <dimen name="widthSm">100dp</dimen>

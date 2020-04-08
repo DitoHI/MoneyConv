@@ -128,7 +128,7 @@
 
                             <LinearLayout
                                 android:id="@+id/ll_currency_from"
-                                android:layout_width="@dimen/widthSm"
+                                android:layout_width="@dimen/spinnerWrapperMd"
                                 android:layout_height="wrap_content"
                                 android:baselineAligned="false"
                                 android:orientation="horizontal"
@@ -147,7 +147,7 @@
 
                                     <Spinner
                                         android:id="@+id/sp_currency_from"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="@dimen/spinnerChildWrapperMd"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:layout_gravity="center"
@@ -155,7 +155,7 @@
                                         android:layout_marginLeft="@dimen/marginXs"
                                         android:background="@android:color/transparent"
                                         android:gravity="center"
-                                        android:spinnerMode="dropdown" />
+                                        android:spinnerMode="dialog" />
 
                                     <ImageView
                                         android:layout_width="wrap_content"
@@ -211,7 +211,7 @@
 
                             <LinearLayout
                                 android:id="@+id/ll_currency_to"
-                                android:layout_width="@dimen/widthSm"
+                                android:layout_width="@dimen/spinnerWrapperMd"
                                 android:layout_height="wrap_content"
                                 android:baselineAligned="false"
                                 android:orientation="horizontal"
@@ -230,7 +230,7 @@
 
                                     <Spinner
                                         android:id="@+id/sp_currency_to"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="@dimen/spinnerChildWrapperMd"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:layout_gravity="center"
@@ -238,7 +238,7 @@
                                         android:layout_marginLeft="@dimen/marginXs"
                                         android:background="@android:color/transparent"
                                         android:gravity="center"
-                                        android:spinnerMode="dropdown" />
+                                        android:spinnerMode="dialog" />
 
                                     <ImageView
                                         android:layout_width="wrap_content"
