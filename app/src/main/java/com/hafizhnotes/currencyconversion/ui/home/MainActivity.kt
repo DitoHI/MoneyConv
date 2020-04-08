@@ -23,6 +23,7 @@ class MainActivity : FragmentActivity() {
         // Setup icon.
         Iconics.init(applicationContext)
 
+        // Setup pager.
         viewPagerHome = findViewById(R.id.vp2_home)
         val pagerAdapterHome = MainActivityAdapter(this)
         viewPagerHome.adapter = pagerAdapterHome

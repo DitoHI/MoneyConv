@@ -5,6 +5,9 @@
     <string name="tab_currency_rates">Currency Rates</string>
 
     <string name="log_default_description">Default Description</string>
+    <string name="log_success">Success</string>
+    <string name="log_loading">Running</string>
+    <string name="log_failed">Something went error</string>
 
     <string name="btn_convert">Convert</string>
 </resources>

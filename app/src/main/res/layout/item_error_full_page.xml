@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_error_page"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/paddingSm">
+
+    <ImageView
+        android:layout_width="@dimen/widthLg"
+        android:layout_height="@dimen/heightLg"
+        android:contentDescription="@string/log_default_description"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_error_condolences" />
+
+    <TextView
+        android:id="@+id/tv_error_log"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/log_failed"
+        android:textSize="@dimen/fontSizeSm" />
+
+</LinearLayout>

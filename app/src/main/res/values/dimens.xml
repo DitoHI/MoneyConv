@@ -25,6 +25,8 @@
 
     <!-- Size -->
     <dimen name="widthSm">100dp</dimen>
+    <dimen name="widthLg">260dp</dimen>
+    <dimen name="heightLg">320dp</dimen>
     <dimen name="iconSizeMd">32dp</dimen>
     <dimen name="iconSizeLg">64dp</dimen>
 

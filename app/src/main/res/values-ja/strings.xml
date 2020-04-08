@@ -6,6 +6,9 @@
     <string name="tab_currency_rates">通貨レート</string>
 
     <string name="log_default_description">デフォルトの説明</string>
+    <string name="log_success">成功</string>
+    <string name="log_loading">ランニング</string>
+    <string name="log_failed">エラーが発生しました</string>
 
     <string name="btn_convert">変換</string>
 </resources>

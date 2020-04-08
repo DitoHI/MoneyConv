@@ -23,6 +23,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/iv_country_flag"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:contentDescription="@string/log_default_description"
@@ -39,6 +40,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_rate_currency_from"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="USD"
@@ -51,6 +53,7 @@
                     android:layout_height="@dimen/spacingMd" />
 
                 <TextView
+                    android:id="@+id/tv_rate_currency_from_sum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1 USD"
@@ -79,6 +82,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_rate_currency_to"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="EUR"
@@ -91,6 +95,7 @@
                     android:layout_height="@dimen/spacingMd" />
 
                 <TextView
+                    android:id="@+id/tv_rate_currency_to_sum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.912323224242 EUR"

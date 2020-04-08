@@ -10,9 +10,6 @@ import android.widget.ArrayAdapter
 import com.hafizhnotes.currencyconversion.R
 import kotlinx.android.synthetic.main.fragment_exchange_currency.view.*
 
-/**
- * A simple [Fragment] subclass.
- */
 class ExchangeCurrencyFragment : Fragment() {
 
     override fun onCreateView(
