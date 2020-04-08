@@ -9,7 +9,7 @@ data class CurrencyLiveResponse(
     @SerializedName("privacy")
     val privacy: String = "",
     @SerializedName("quotes")
-    val quotes: JsonObject = JsonObject(),
+    val currencyRates: JsonObject = JsonObject(),
     @SerializedName("source")
     val source: String = "",
     @SerializedName("success")

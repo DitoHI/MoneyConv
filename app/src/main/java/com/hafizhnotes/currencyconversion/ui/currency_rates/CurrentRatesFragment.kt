@@ -17,7 +17,7 @@ import com.hafizhnotes.currencyconversion.data.repository.Status
 import kotlinx.android.synthetic.main.fragment_current_rates.view.*
 import kotlinx.android.synthetic.main.item_error_full_page.view.*
 
-class CurrentRatesFragment(val source: String = "USD") : Fragment() {
+class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
     private lateinit var rootView: View
     private lateinit var repository: CurrencyRatesRepository
     private lateinit var viewModel: CurrencyRatesViewModel
@@ -52,7 +52,11 @@ class CurrentRatesFragment(val source: String = "USD") : Fragment() {
                 Observer {
                     if (!it.success) return@Observer
 
-                    val adapter = CurrencyRateAdapter(rootView.context, source, it.quotes)
+                    // Remove the source so the list of currency
+                    // doesn't get duplicated.
+                    it.currencyRates.remove("$source$source")
+
+                    val adapter = CurrencyRateAdapter(rootView.context, source, it.currencyRates)
                     rootView.rv_currency_rates.adapter = adapter
                 }
             )

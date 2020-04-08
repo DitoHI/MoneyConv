@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_current_rates_wrapper"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/spacingMd">
+    android:layout_marginVertical="@dimen/spacingXs">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -66,8 +67,8 @@
                 android:layout_height="wrap_content" />
 
             <com.mikepenz.iconics.view.IconicsImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="@dimen/fontSizeMd"
+                android:layout_height="@dimen/fontSizeMd"
                 app:iiv_color="@color/gray02"
                 app:iiv_icon="gmi-swap" />
 
@@ -115,7 +116,7 @@
             android:paddingRight="0dp"
             android:text="SG$0.91"
             android:textColor="@color/black01"
-            android:textSize="@dimen/fontSizeMd"
+            android:textSize="@dimen/fontSizeSm"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
