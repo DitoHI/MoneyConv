@@ -10,5 +10,8 @@
     <string name="log_loading">ランニング</string>
     <string name="log_failed">エラーが発生しました</string>
 
+    <string name="dropdown_default_currency">USD</string>
+    <string name="dropdown_default_int">0</string>
+
     <string name="btn_convert">変換</string>
 </resources>

@@ -62,7 +62,6 @@ class CurrencyRateAdapter(
             /**
              * Bind the UI
              */
-
             // Get the image url of country flags.
             val glideOptions =
                 RequestOptions()

@@ -7,10 +7,96 @@
     android:layout_height="match_parent"
     tools:context=".ui.exchange_currency.ExchangeCurrencyFragment">
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/sfl_exchange_loading"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/sfl_exchange_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="320dp"
+                        android:layout_height="@dimen/fontSizeLg"
+                        android:background="@color/gray04" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/paddingXs" />
+
+                    <View
+                        android:layout_width="240dp"
+                        android:layout_height="@dimen/fontSizeLg"
+                        android:background="@color/gray04" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/paddingXs" />
+
+                    <View
+                        android:layout_width="100dp"
+                        android:layout_height="@dimen/fontSizeLg"
+                        android:background="@color/gray04" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/paddingSm" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="320dp"
+                        android:layout_height="@dimen/fontSizeLg"
+                        android:background="@color/gray04" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/paddingXs" />
+
+                    <View
+                        android:layout_width="240dp"
+                        android:layout_height="@dimen/fontSizeLg"
+                        android:background="@color/gray04" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/paddingXs" />
+
+                    <View
+                        android:layout_width="100dp"
+                        android:layout_height="@dimen/fontSizeLg"
+                        android:background="@color/gray04" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <include layout="@layout/item_error_full_page" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,9 +118,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
                             android:paddingHorizontal="@dimen/paddingXs"
                             android:paddingVertical="@dimen/paddingLg">
 
@@ -45,7 +133,8 @@
                                 android:baselineAligned="false"
                                 android:orientation="horizontal"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/et_currency_from"
+                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <RelativeLayout
@@ -82,19 +171,28 @@
 
                             </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/tv_currency_from"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="1200"
-                                android:textColor="@color/gray02"
-                                android:textSize="@dimen/fontSizeMd"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                            <Space
+                                android:layout_width="@dimen/paddingLg"
+                                android:layout_height="match_parent" />
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                            <EditText
+                                android:id="@+id/et_currency_from"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:autofillHints=""
+                                android:background="@null"
+                                android:digits="0123456789,$"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:gravity="end"
+                                android:hint="@string/dropdown_default_int"
+                                android:imeOptions="actionDone"
+                                android:inputType="textMultiLine|number"
+                                android:scrollHorizontally="false"
+                                android:textSize="@dimen/fontSizeMd"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
 
@@ -103,9 +201,11 @@
                         android:layout_height="wrap_content"
                         app:cardBackgroundColor="@color/gray06">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
                             android:paddingHorizontal="@dimen/paddingXs"
                             android:paddingVertical="@dimen/paddingLg">
 
@@ -116,7 +216,8 @@
                                 android:baselineAligned="false"
                                 android:orientation="horizontal"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/et_currency_from"
+                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <RelativeLayout
@@ -153,19 +254,25 @@
 
                             </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/tv_currency_to"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="1200"
-                                android:textColor="@color/gray02"
-                                android:textSize="@dimen/fontSizeMd"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                            <Space
+                                android:layout_width="@dimen/paddingLg"
+                                android:layout_height="match_parent" />
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                            <EditText
+                                android:id="@+id/et_currency_to"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:autofillHints=""
+                                android:background="@null"
+                                android:digits="0,1,2,3,4,5,6,7,8,9"
+                                android:gravity="end"
+                                android:hint="@string/dropdown_default_int"
+                                android:inputType="textMultiLine|number"
+                                android:scrollHorizontally="false"
+                                android:textSize="@dimen/fontSizeMd"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
 
@@ -191,6 +298,7 @@
                 android:layout_weight="1" />
 
             <Button
+                android:id="@+id/btn_convert_currency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -204,6 +312,6 @@
 
         </LinearLayout>
 
-    </com.facebook.shimmer.ShimmerFrameLayout>
+    </LinearLayout>
 
 </FrameLayout>

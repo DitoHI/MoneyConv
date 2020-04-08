@@ -9,5 +9,8 @@
     <string name="log_loading">Running</string>
     <string name="log_failed">Something went error</string>
 
+    <string name="dropdown_default_currency">USD</string>
+    <string name="dropdown_default_int">0</string>
+
     <string name="btn_convert">Convert</string>
 </resources>
