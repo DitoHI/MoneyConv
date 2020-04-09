@@ -1,32 +1,36 @@
 package com.hafizhnotes.currencyconversion.ui.currency_rates
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.hafizhnotes.currencyconversion.R
 import com.hafizhnotes.currencyconversion.data.api.CurrencyLayerClient
+import com.hafizhnotes.currencyconversion.data.constant.TestingConstant
 import com.hafizhnotes.currencyconversion.data.helper.DateTimeHelper
 import com.hafizhnotes.currencyconversion.data.repository.NetworkState
 import com.hafizhnotes.currencyconversion.data.repository.Status
 import com.hafizhnotes.currencyconversion.data.vo.CurrencyLiveResponse
 import kotlinx.android.synthetic.main.fragment_current_rates.view.*
+import kotlinx.android.synthetic.main.fragment_exchange_currency.view.*
 import kotlinx.android.synthetic.main.item_error_full_page.view.*
-import java.sql.Timestamp
 import java.util.concurrent.TimeUnit
+
 
 class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
     private lateinit var rootView: View
     private lateinit var repository: CurrencyRatesRepository
     private lateinit var viewModel: CurrencyRatesViewModel
     private lateinit var roomViewModel: CurrencyRatesRoomViewModel
-    private var isFetchApi = true
+    private var isUpdatedViaApi = false
+    private var isUpdatedViaLocal = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,13 +57,9 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
         roomViewModel.latestCurrencyLive.observe(
             viewLifecycleOwner,
             Observer {
-                rootView.sfl_rates_loading.visibility = View.VISIBLE
+                if (isUpdatedViaApi) return@Observer
 
-                if (it.isEmpty()) {
-                    isFetchApi = true
-                    rootView.sfl_rates_loading.visibility = View.GONE
-                    return@Observer
-                }
+                if (it.isEmpty()) return@Observer
 
                 // Check the timestamp
                 // If more than 30 minutes, then fetch from API.
@@ -77,15 +77,12 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
                         timestampNow.time - timestampFetched.time,
                         TimeUnit.MILLISECONDS
                     )
-                if (diff > 30) {
-                    isFetchApi = true
-                    rootView.sfl_rates_loading.visibility = View.GONE
-                    return@Observer
-                }
+                if (diff > 30) return@Observer
 
                 // Bind the data from local
-                isFetchApi = false
+                isUpdatedViaLocal = true
                 rootView.sfl_rates_loading.visibility = View.GONE
+                Log.d(TestingConstant.TAG_BIND_VIA, "Local")
                 onBindCurrencyLive(CurrencyLiveResponse.fromRoomResponse(liveResponse))
             }
         )
@@ -105,11 +102,11 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
                 Observer {
                     if (!it.success) return@Observer
 
-                    // Only do the rest
-                    // If local is not exist yet.
-                    if (!isFetchApi) return@Observer
+                    if (isUpdatedViaLocal) return@Observer
 
+                    Log.d(TestingConstant.TAG_BIND_VIA, "API")
                     onBindCurrencyLive(it)
+                    isUpdatedViaApi = true
 
                     // Insert to local if possible
                     if (::roomViewModel.isInitialized) {
@@ -125,8 +122,7 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
             .observe(
                 viewLifecycleOwner,
                 Observer {
-
-                    if (!isFetchApi) return@Observer
+                    if (isUpdatedViaLocal) return@Observer
 
                     rootView.sfl_rates_loading.visibility =
                         if (it == NetworkState.LOADING) View.VISIBLE else View.GONE
