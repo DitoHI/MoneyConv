@@ -11,12 +11,19 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.TextView.OnEditorActionListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.hafizhnotes.currencyconversion.R
+import com.hafizhnotes.currencyconversion.data.api.CurrencyLayerClient
 import com.hafizhnotes.currencyconversion.data.constant.TestingConstant
+import com.hafizhnotes.currencyconversion.data.repository.NetworkState
+import com.hafizhnotes.currencyconversion.data.repository.Status
 import com.hafizhnotes.currencyconversion.data.vo.CurrencyListResponse
 import kotlinx.android.synthetic.main.fragment_exchange_currency.view.*
+import kotlinx.android.synthetic.main.item_error_full_page.view.*
 import java.lang.Exception
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -25,6 +32,11 @@ import java.util.*
 
 class ExchangeCurrencyFragment : Fragment() {
     private lateinit var rootView: View
+    private lateinit var repository: ExchangeCurrencyRepository
+    private lateinit var viewModel: ExchangeCurrencyViewModel
+
+    private var fromCurrencyDefault = "USD - United States Dollar"
+    private val toCurrencyDefault = "JPY - Japanese Yen"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,8 +46,14 @@ class ExchangeCurrencyFragment : Fragment() {
         rootView =
             inflater.inflate(R.layout.fragment_exchange_currency, container, false)
 
-        onBindStart()
         return rootView
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        onBindStart()
+        onBindDataUI()
     }
 
     private fun onBindStart() {
@@ -71,48 +89,78 @@ class ExchangeCurrencyFragment : Fragment() {
                     }
                     false
                 })
+    }
 
-        // Testing Data.
-        val testResp = CurrencyListResponse(
-            success = true,
-            currencies = Gson().fromJson(TestingConstant.CURRENCY_LIST_STR, JsonObject::class.java)
-        )
-        val currencyLabelList = testResp.currencies.keySet().map {
-            val countryName =
-                testResp
-                    .currencies[it]
-                    .toString()
-                    .replace("\"", "")
+    private fun onBindDataUI() {
+        val apiService = CurrencyLayerClient.getClient()
+        repository = ExchangeCurrencyRepository(apiService)
+        viewModel = getViewModel()
 
-            "$it - $countryName"
-        }.toList()
+        // Bind the currency list.
+        viewModel
+            .currencyList
+            .observe(
+                viewLifecycleOwner,
+                Observer {
+                    if (!it.success) return@Observer
 
-        // Testing.
-        // Skeleton.
-//        view.sfl_exchange_loading.visibility = View.VISIBLE
-//        view.sfl_exchange_loading.startShimmer()
+                    val currencyLabels =
+                        it.currencies.keySet().map { currency ->
+                            val name = it
+                                .currencies
+                                .get(currency)
+                                .toString()
+                                .replace("\"", "")
 
-        // Testing.
-        // Spinner.
-        val fromCurrencyAdapter =
-            ArrayAdapter(
-                rootView.context,
-                R.layout.spinner_common_text,
-                currencyLabelList
+                            "$currency - $name"
+                        }
+
+                    val fromCurrencyAdapter =
+                        ArrayAdapter(
+                            rootView.context,
+                            R.layout.spinner_common_text,
+                            currencyLabels
+                        )
+
+                    fromCurrencyAdapter.setDropDownViewResource(R.layout.spinner_common_dropdown)
+                    rootView.sp_currency_from.adapter = fromCurrencyAdapter
+                    rootView
+                        .sp_currency_from
+                        .setSelection(currencyLabels.indexOf(fromCurrencyDefault))
+
+                    val toCurrencyAdapter =
+                        ArrayAdapter(
+                            rootView.context,
+                            R.layout.spinner_common_text,
+                            currencyLabels
+                        )
+
+                    toCurrencyAdapter.setDropDownViewResource(R.layout.spinner_common_dropdown)
+                    rootView.sp_currency_to.adapter = toCurrencyAdapter
+                    rootView
+                        .sp_currency_to
+                        .setSelection(currencyLabels.indexOf(toCurrencyDefault))
+                }
             )
 
-        fromCurrencyAdapter.setDropDownViewResource(R.layout.spinner_common_dropdown)
-        rootView.sp_currency_from.adapter = fromCurrencyAdapter
+        // Bind the network state.
+        viewModel
+            .networkState
+            .observe(
+                viewLifecycleOwner,
+                Observer {
+                    rootView.sfl_exchange_loading.visibility =
+                        if (it == NetworkState.LOADING) View.VISIBLE else View.GONE
 
-        val toCurrencyAdapter =
-            ArrayAdapter(
-                rootView.context,
-                R.layout.spinner_common_text,
-                listOf("USD - United States", "IDR - Indonesia")
+                    if (it.status == Status.FAILED) {
+                        rootView.ll_error_page.visibility = View.VISIBLE
+                        rootView.tv_error_log.text = it.message
+                    } else {
+                        rootView.ll_error_page.visibility = View.GONE
+                        rootView.tv_error_log.text = resources.getString(R.string.log_failed)
+                    }
+                }
             )
-
-        toCurrencyAdapter.setDropDownViewResource(R.layout.spinner_common_dropdown)
-        rootView.sp_currency_to.adapter = toCurrencyAdapter
     }
 
     private fun formatCurrencyInput(source: String, input: CharSequence?): String {
@@ -173,4 +221,17 @@ class ExchangeCurrencyFragment : Fragment() {
             activity.currentFocus!!.windowToken, 0
         )
     }
+
+    private fun getViewModel(): ExchangeCurrencyViewModel =
+        ViewModelProvider(
+            this,
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                    @Suppress("UNCHECKED_CAST")
+                    return ExchangeCurrencyViewModel(
+                        repository
+                    ) as T
+                }
+            }
+        )[ExchangeCurrencyViewModel::class.java]
 }

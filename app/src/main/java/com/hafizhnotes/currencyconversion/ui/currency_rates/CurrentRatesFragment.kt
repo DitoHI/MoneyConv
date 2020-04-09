@@ -89,12 +89,11 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
     }
 
     private fun onBindData() {
-
         val apiService = CurrencyLayerClient.getClient()
         repository = CurrencyRatesRepository(apiService)
         viewModel = getViewModel()
 
-        // Bind the quotes.
+        // Bind the rates.
         viewModel
             .currencyLive
             .observe(
