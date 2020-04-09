@@ -21,8 +21,9 @@ class CurrencyRatesRoomViewModel(application: Application) : AndroidViewModel(ap
     }
 
     fun insert(currencyLiveRoomResponse: CurrencyLiveRoomResponse) =
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAll()
-            repository.insert(currencyLiveRoomResponse)
-        }
+        viewModelScope
+            .launch(Dispatchers.IO) {
+                repository.deleteAll()
+                repository.insert(currencyLiveRoomResponse)
+            }
 }

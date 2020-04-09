@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.hafizhnotes.currencyconversion.data.constant.DBConstant
+import com.hafizhnotes.currencyconversion.room.dao.CurrencyListRoomDao
 import com.hafizhnotes.currencyconversion.room.dao.CurrencyLiveRoomDao
 import com.hafizhnotes.currencyconversion.room.vo.CurrencyListRoomResponse
 import com.hafizhnotes.currencyconversion.room.vo.CurrencyLiveRoomResponse
@@ -18,6 +19,8 @@ import kotlinx.coroutines.CoroutineScope
 abstract class CurrencyLayerDatabase : RoomDatabase() {
 
     abstract fun currencyLiveRoomDao(): CurrencyLiveRoomDao
+
+    abstract fun currencyListRoomDao(): CurrencyListRoomDao
 
     companion object {
         @Volatile

@@ -29,6 +29,7 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
     private lateinit var repository: CurrencyRatesRepository
     private lateinit var viewModel: CurrencyRatesViewModel
     private lateinit var roomViewModel: CurrencyRatesRoomViewModel
+
     private var isUpdatedViaApi = false
     private var isUpdatedViaLocal = false
 
@@ -52,7 +53,7 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
 
     private fun onBindRoomData() {
 
-        // Get local currency live using Room.
+        // Get currency live in local db using Room.
         roomViewModel = getRoomViewModel()
         roomViewModel.latestCurrencyLive.observe(
             viewLifecycleOwner,
@@ -81,7 +82,12 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
 
                 // Bind the data from local
                 isUpdatedViaLocal = true
+
+                // Updated related views.
                 rootView.sfl_rates_loading.visibility = View.GONE
+                rootView.ll_error_page.visibility = View.GONE
+                rootView.tv_error_log.text = resources.getString(R.string.log_failed)
+
                 Log.d(TestingConstant.TAG_BIND_VIA, "Local")
                 onBindCurrencyLive(CurrencyLiveResponse.fromRoomResponse(liveResponse))
             }
@@ -107,7 +113,7 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
                     onBindCurrencyLive(it)
                     isUpdatedViaApi = true
 
-                    // Insert to local if possible
+                    // Insert to local if possible.
                     if (::roomViewModel.isInitialized) {
                         roomViewModel.insert(it.toRoomResponse())
                     }

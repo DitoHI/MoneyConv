@@ -274,6 +274,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <com.mikepenz.iconics.view.IconicsButton
+                    android:id="@+id/ibtn_swap_currency"
                     android:layout_width="@dimen/iconSizeLg"
                     android:layout_height="@dimen/iconSizeLg"
                     android:background="@drawable/btn_bg_round"
