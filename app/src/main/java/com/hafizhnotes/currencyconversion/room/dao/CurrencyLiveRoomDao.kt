@@ -15,4 +15,9 @@ interface CurrencyLiveRoomDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(currencyLiveResponse: CurrencyLiveRoomResponse)
+
+    @Query(
+        "DELETE FROM ${DBConstant.CURRENCY_LIVE_DB_NAME}"
+    )
+    suspend fun deleteAll()
 }

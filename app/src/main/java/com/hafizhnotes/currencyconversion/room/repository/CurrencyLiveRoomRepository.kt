@@ -12,4 +12,6 @@ class CurrencyLiveRoomRepository(private val currencyLiveRoomDao: CurrencyLiveRo
     suspend fun insert(currencyLiveRoomResponse: CurrencyLiveRoomResponse) {
         currencyLiveRoomDao.insert(currencyLiveRoomResponse)
     }
+
+    suspend fun deleteAll() = currencyLiveRoomDao.deleteAll()
 }

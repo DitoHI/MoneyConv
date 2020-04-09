@@ -7,9 +7,13 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.hafizhnotes.currencyconversion.R
+import com.hafizhnotes.currencyconversion.data.helper.DateTimeHelper
 import com.hafizhnotes.currencyconversion.ui.currency_rates.CurrentRatesFragment
 import com.hafizhnotes.currencyconversion.ui.exchange_currency.ExchangeCurrencyFragment
 import com.mikepenz.iconics.Iconics
+import java.sql.Timestamp
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 private const val NUM_PAGES = 2
 
@@ -36,6 +40,12 @@ class MainActivity : FragmentActivity() {
                 else -> tab.text = resources.getString(R.string.tab_exchange_currency)
             }
         }.attach()
+
+        val now = DateTimeHelper.unixToDate(System.currentTimeMillis() / 1000L)
+        val fetch = DateTimeHelper.unixToDate(1586363706L)
+        val diff = now.time - fetch.time
+        val minutes = TimeUnit.MINUTES.convert(diff, TimeUnit.MILLISECONDS)
+        print(now)
     }
 
     private inner class MainActivityAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {

@@ -7,17 +7,17 @@ import com.hafizhnotes.currencyconversion.data.constant.DBConstant
 
 @Entity(tableName = DBConstant.CURRENCY_LIST_DB_NAME)
 class CurrencyListRoomResponse(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
 
     @ColumnInfo(name = DBConstant.CURRENCY_LIST_COLUMN_CURRENCIES)
-    val currencies: String,
+    val currencies: String = "",
 
     @ColumnInfo(name = DBConstant.CURRENCY_LIST_COLUMN_PRIVACY)
-    val privacy: String,
+    val privacy: String = "",
 
     @ColumnInfo(name = DBConstant.CURRENCY_LIST_COLUMN_SUCCESS)
-    val success: Boolean,
+    val success: Boolean = false,
 
     @ColumnInfo(name = DBConstant.CURRENCY_LIST_COLUMN_TERMS)
-    val terms: String
+    val terms: String = ""
 )
