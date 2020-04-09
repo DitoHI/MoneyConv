@@ -1,7 +1,6 @@
 package com.hafizhnotes.currencyconversion.ui.currency_rates
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -85,8 +84,6 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
                 }
 
                 // Bind the data from local
-                Log.d("Bind", "From LOCAL")
-                Log.d("Sum Data", it.size.toString())
                 isFetchApi = false
                 rootView.sfl_rates_loading.visibility = View.GONE
                 onBindCurrencyLive(CurrencyLiveResponse.fromRoomResponse(liveResponse))
