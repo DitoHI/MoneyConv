@@ -13,18 +13,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hafizhnotes.currencyconversion.R
 import com.hafizhnotes.currencyconversion.data.api.CurrencyLayerClient
+import com.hafizhnotes.currencyconversion.data.constant.ResourceConstant
 import com.hafizhnotes.currencyconversion.data.constant.TestingConstant
 import com.hafizhnotes.currencyconversion.data.helper.DateTimeHelper
 import com.hafizhnotes.currencyconversion.data.repository.NetworkState
 import com.hafizhnotes.currencyconversion.data.repository.Status
 import com.hafizhnotes.currencyconversion.data.vo.CurrencyLiveResponse
+import com.hafizhnotes.currencyconversion.ui.home.MainActivity
 import kotlinx.android.synthetic.main.fragment_current_rates.view.*
 import kotlinx.android.synthetic.main.fragment_exchange_currency.view.*
 import kotlinx.android.synthetic.main.item_error_full_page.view.*
 import java.util.concurrent.TimeUnit
 
 
-class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
+class CurrentRatesFragment : Fragment() {
     private lateinit var rootView: View
     private lateinit var repository: CurrencyRatesRepository
     private lateinit var viewModel: CurrencyRatesViewModel
@@ -144,6 +146,14 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
     }
 
     private fun onBindCurrencyLive(it: CurrencyLiveResponse) {
+        // Init arguments
+        val mainActivity = activity!! as MainActivity
+        val source =
+            mainActivity.bundle.getString(ResourceConstant.BUNDLE_KEY_SOURCE, "USD")
+
+        val sourceValue =
+            mainActivity.bundle.getDouble(ResourceConstant.BUNDLE_KEY_SOURCE_VALUE, 1.0)
+
         // Init properties of recycler view.
         val layoutManager = LinearLayoutManager(rootView.context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -153,7 +163,12 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
         // doesn't get duplicated.
         it.currencyRates.remove("$source$source")
 
-        val adapter = CurrencyRateAdapter(rootView.context, source, it.currencyRates)
+        val adapter = CurrencyRateAdapter(
+            context = rootView.context,
+            source = source,
+            sourceSum = sourceValue,
+            liveResponse = it
+        )
         rootView.rv_currency_rates.adapter = adapter
     }
 

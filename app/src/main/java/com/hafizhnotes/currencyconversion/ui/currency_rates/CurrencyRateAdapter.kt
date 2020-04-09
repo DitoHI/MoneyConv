@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.gson.JsonObject
 import com.hafizhnotes.currencyconversion.R
 import com.hafizhnotes.currencyconversion.data.constant.URLConstant
+import com.hafizhnotes.currencyconversion.data.vo.CurrencyLiveResponse
 import kotlinx.android.synthetic.main.item_currency_rates.view.*
 import java.text.NumberFormat
 import java.util.*
@@ -20,7 +21,7 @@ import java.util.*
 class CurrencyRateAdapter(
     private val context: Context,
     private val source: String,
-    private val ratesJsonObject: JsonObject,
+    private val liveResponse: CurrencyLiveResponse,
     private val sourceSum: Double = 1.0
 ) : RecyclerView.Adapter<CurrencyRateAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,7 +34,7 @@ class CurrencyRateAdapter(
     }
 
     override fun getItemCount(): Int {
-        return ratesJsonObject.keySet().size
+        return liveResponse.currencyRates.keySet().size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -41,14 +42,17 @@ class CurrencyRateAdapter(
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val ratesJsonObject = liveResponse.currencyRates
         var currencyNames = ratesJsonObject.keySet().toList()
 
         @SuppressLint("SetTextI18n")
         fun setData(position: Int) {
             // Get destination currency.
             val currencyName = currencyNames[position]
-            val rate = ratesJsonObject[currencyName].asDouble
-            val destinationCurrency = currencyName.replace(source, "", true)
+            val destinationCurrency =
+                currencyName.replace("USD", "", true)
+
+            val rate = liveResponse.convertCurrency(source, destinationCurrency, sourceSum)
 
             // If the holder[position] is the source, then hide the view.
             if (destinationCurrency.isEmpty()) return

@@ -7,6 +7,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.hafizhnotes.currencyconversion.R
+import com.hafizhnotes.currencyconversion.data.constant.ResourceConstant
 import com.hafizhnotes.currencyconversion.ui.currency_rates.CurrentRatesFragment
 import com.hafizhnotes.currencyconversion.ui.exchange_currency.ExchangeCurrencyFragment
 import com.mikepenz.iconics.Iconics
@@ -14,7 +15,8 @@ import com.mikepenz.iconics.Iconics
 private const val NUM_PAGES = 2
 
 class MainActivity : FragmentActivity() {
-    private lateinit var viewPagerHome: ViewPager2
+    lateinit var viewPagerHome: ViewPager2
+    val bundle = Bundle()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +40,17 @@ class MainActivity : FragmentActivity() {
         }.attach()
     }
 
-    private inner class MainActivityAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+    private inner class MainActivityAdapter(fa: FragmentActivity) :
+        FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = NUM_PAGES
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                1 -> CurrentRatesFragment()
-                else -> ExchangeCurrencyFragment()
+                1 ->
+                    CurrentRatesFragment()
+
+                else ->
+                    ExchangeCurrencyFragment()
             }
         }
     }

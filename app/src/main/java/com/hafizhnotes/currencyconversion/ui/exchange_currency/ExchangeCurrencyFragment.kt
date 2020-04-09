@@ -21,12 +21,14 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.hafizhnotes.currencyconversion.R
 import com.hafizhnotes.currencyconversion.data.api.CurrencyLayerClient
+import com.hafizhnotes.currencyconversion.data.constant.ResourceConstant
 import com.hafizhnotes.currencyconversion.data.constant.TestingConstant
 import com.hafizhnotes.currencyconversion.data.repository.NetworkState
 import com.hafizhnotes.currencyconversion.data.repository.Status
 import com.hafizhnotes.currencyconversion.data.vo.CurrencyListResponse
 import com.hafizhnotes.currencyconversion.data.vo.CurrencyLiveResponse
 import com.hafizhnotes.currencyconversion.ui.currency_rates.CurrencyRatesRoomViewModel
+import com.hafizhnotes.currencyconversion.ui.home.MainActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_exchange_currency.*
 import kotlinx.android.synthetic.main.fragment_exchange_currency.view.*
@@ -143,6 +145,31 @@ class ExchangeCurrencyFragment : Fragment() {
 
         rootView.sp_currency_from.onItemSelectedListener = itemSelectedListener
         rootView.sp_currency_to.onItemSelectedListener = itemSelectedListener
+
+        // Clicked btn_convert will be redirected to CurrentRateFragment
+        rootView.btn_convert_currency.setOnClickListener {
+            val mainActivity = activity as MainActivity
+            mainActivity.bundle.putString(
+                ResourceConstant.BUNDLE_KEY_SOURCE,
+                rootView.sp_currency_from.selectedItem.toString().take(3)
+            )
+
+            var sourceValue =
+                (rootView.et_currency_from.text as CharSequence).toString().toCurrencyDouble()
+            sourceValue = if (sourceValue <= 0.0) 1.0 else sourceValue
+
+            mainActivity.bundle.putDouble(
+                ResourceConstant.BUNDLE_KEY_SOURCE_VALUE,
+                sourceValue
+            )
+
+            // Redirect to current rates
+            val tabHost = mainActivity.tab_home.getTabAt(1) ?: return@setOnClickListener
+            tabHost.select()
+
+            // Notify changed
+            mainActivity.viewPagerHome.adapter?.notifyItemChanged(1)
+        }
     }
 
     private fun onBindRoomDataUI() {
