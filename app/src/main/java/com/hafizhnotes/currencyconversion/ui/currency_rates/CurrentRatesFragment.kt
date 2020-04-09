@@ -21,6 +21,7 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
     private lateinit var rootView: View
     private lateinit var repository: CurrencyRatesRepository
     private lateinit var viewModel: CurrencyRatesViewModel
+    private lateinit var roomViewModel: CurrencyRatesRoomViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +40,10 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
         repository = CurrencyRatesRepository(apiService)
         viewModel = getViewModel()
 
+        // Get local currency live using Room.
+        roomViewModel = getRoomViewModel()
+
+
         // Init properties of recycler view.
         val layoutManager = LinearLayoutManager(rootView.context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -48,7 +53,7 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
         viewModel
             .currencyLive
             .observe(
-                this,
+                viewLifecycleOwner,
                 Observer {
                     if (!it.success) return@Observer
 
@@ -66,7 +71,7 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
         viewModel
             .networkState
             .observe(
-                this,
+                viewLifecycleOwner,
                 Observer {
                     rootView.sfl_rates_loading.visibility =
                         if (it == NetworkState.LOADING) View.VISIBLE else View.GONE
@@ -94,4 +99,7 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
                 }
             }
         )[CurrencyRatesViewModel::class.java]
+
+    private fun getRoomViewModel(): CurrencyRatesRoomViewModel =
+        ViewModelProvider(this).get(CurrencyRatesRoomViewModel::class.java)
 }

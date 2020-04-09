@@ -149,7 +149,7 @@ class ExchangeCurrencyFragment : Fragment() {
         if (activity == null) return
 
         if (view !is EditText) {
-            view.setOnTouchListener { v, event ->
+            view.setOnTouchListener { _, _ ->
                 hideSoftKeyboard(activity!!)
                 false
             }

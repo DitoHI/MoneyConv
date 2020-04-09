@@ -23,6 +23,7 @@ class CurrencyLiveDataSource(
 
     fun fetchCurrencyLive() {
         _networkState.postValue(NetworkState.LOADING)
+
         try {
             compositeDisposable.add(
                 apiService
