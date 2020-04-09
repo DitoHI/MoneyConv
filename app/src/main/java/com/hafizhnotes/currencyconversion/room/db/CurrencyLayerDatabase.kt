@@ -23,7 +23,7 @@ abstract class CurrencyLayerDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: CurrencyLayerDatabase? = null
 
-        fun getDatabase(context: Context, scope: CoroutineScope): CurrencyLayerDatabase {
+        fun getDatabase(context: Context): CurrencyLayerDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) return tempInstance
 

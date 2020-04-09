@@ -1,6 +1,7 @@
 package com.hafizhnotes.currencyconversion.ui.currency_rates
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -36,9 +37,14 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
         rootView =
             inflater.inflate(R.layout.fragment_current_rates, container, false)
 
+        return rootView
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
         onBindRoomData()
         onBindData()
-        return rootView
     }
 
     private fun onBindRoomData() {
@@ -79,6 +85,8 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
                 }
 
                 // Bind the data from local
+                Log.d("Bind", "From LOCAL")
+                Log.d("Sum Data", it.size.toString())
                 isFetchApi = false
                 rootView.sfl_rates_loading.visibility = View.GONE
                 onBindCurrencyLive(CurrencyLiveResponse.fromRoomResponse(liveResponse))
@@ -91,11 +99,6 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
         val apiService = CurrencyLayerClient.getClient()
         repository = CurrencyRatesRepository(apiService)
         viewModel = getViewModel()
-
-        // Init properties of recycler view.
-        val layoutManager = LinearLayoutManager(rootView.context)
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
-        rootView.rv_currency_rates.layoutManager = layoutManager
 
         // Bind the quotes.
         viewModel
@@ -110,6 +113,11 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
                     if (!isFetchApi) return@Observer
 
                     onBindCurrencyLive(it)
+
+                    // Insert to local if possible
+                    if (::roomViewModel.isInitialized) {
+                        roomViewModel.insert(it.toRoomResponse())
+                    }
                 }
             )
 
@@ -138,17 +146,17 @@ class CurrentRatesFragment(private val source: String = "USD") : Fragment() {
     }
 
     private fun onBindCurrencyLive(it: CurrencyLiveResponse) {
+        // Init properties of recycler view.
+        val layoutManager = LinearLayoutManager(rootView.context)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        rootView.rv_currency_rates.layoutManager = layoutManager
+
         // Remove the source so the list of currency
         // doesn't get duplicated.
         it.currencyRates.remove("$source$source")
 
         val adapter = CurrencyRateAdapter(rootView.context, source, it.currencyRates)
         rootView.rv_currency_rates.adapter = adapter
-
-        // Insert to local if possible
-        if (::roomViewModel.isInitialized) {
-            roomViewModel.insert(it.toRoomResponse())
-        }
     }
 
     private fun getViewModel(): CurrencyRatesViewModel =

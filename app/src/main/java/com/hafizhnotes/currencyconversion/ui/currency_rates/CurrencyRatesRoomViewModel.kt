@@ -12,16 +12,12 @@ import kotlinx.coroutines.launch
 
 class CurrencyRatesRoomViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository: CurrencyLiveRoomRepository
+    private val liveDao = CurrencyLayerDatabase.getDatabase(application).currencyLiveRoomDao()
 
-    val latestCurrencyLive: LiveData<List<CurrencyLiveRoomResponse>>
+    private val repository = CurrencyLiveRoomRepository(liveDao)
 
-    init {
-        val liveDao =
-            CurrencyLayerDatabase.getDatabase(application, viewModelScope).currencyLiveRoomDao()
-
-        repository = CurrencyLiveRoomRepository(liveDao)
-        latestCurrencyLive = repository.latestCurrencyLive
+    val latestCurrencyLive: LiveData<List<CurrencyLiveRoomResponse>> by lazy {
+        repository.latestCurrencyLive
     }
 
     fun insert(currencyLiveRoomResponse: CurrencyLiveRoomResponse) =
