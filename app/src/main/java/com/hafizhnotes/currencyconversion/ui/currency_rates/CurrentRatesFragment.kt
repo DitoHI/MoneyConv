@@ -70,7 +70,7 @@ class CurrentRatesFragment : Fragment() {
                 val diff = dateNow.time - liveResponse.createdAt.time
                 val diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(diff)
 
-                if (diffInMinutes >= 1) return@Observer
+                if (diffInMinutes >= 30) return@Observer
 
                 // Bind the data from local
                 isUpdatedViaLocal = true
