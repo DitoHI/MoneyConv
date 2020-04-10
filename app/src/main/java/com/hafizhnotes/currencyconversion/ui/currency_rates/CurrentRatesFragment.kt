@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -15,14 +14,13 @@ import com.hafizhnotes.currencyconversion.R
 import com.hafizhnotes.currencyconversion.data.api.CurrencyLayerClient
 import com.hafizhnotes.currencyconversion.data.constant.ResourceConstant
 import com.hafizhnotes.currencyconversion.data.constant.TestingConstant
-import com.hafizhnotes.currencyconversion.data.helper.DateTimeHelper
 import com.hafizhnotes.currencyconversion.data.repository.NetworkState
 import com.hafizhnotes.currencyconversion.data.repository.Status
 import com.hafizhnotes.currencyconversion.data.vo.CurrencyLiveResponse
 import com.hafizhnotes.currencyconversion.ui.home.MainActivity
 import kotlinx.android.synthetic.main.fragment_current_rates.view.*
-import kotlinx.android.synthetic.main.fragment_exchange_currency.view.*
 import kotlinx.android.synthetic.main.item_error_full_page.view.*
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -67,20 +65,12 @@ class CurrentRatesFragment : Fragment() {
                 // Check the timestamp
                 // If more than 30 minutes, then fetch from API.
                 val liveResponse = it.first()
-                val timestampNow =
-                    DateTimeHelper
-                        .unixToDate(System.currentTimeMillis() / 1000L)
+                val timeZone = TimeZone.getTimeZone("IST")
+                val dateNow = Calendar.getInstance(timeZone).time
+                val diff = dateNow.time - liveResponse.createdAt.time
+                val diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(diff)
 
-                val timestampFetched =
-                    DateTimeHelper
-                        .unixToDate(liveResponse.timestamp.toLong())
-
-                val diff =
-                    TimeUnit.MINUTES.convert(
-                        timestampNow.time - timestampFetched.time,
-                        TimeUnit.MILLISECONDS
-                    )
-                if (diff > 30) return@Observer
+                if (diffInMinutes >= 1) return@Observer
 
                 // Bind the data from local
                 isUpdatedViaLocal = true

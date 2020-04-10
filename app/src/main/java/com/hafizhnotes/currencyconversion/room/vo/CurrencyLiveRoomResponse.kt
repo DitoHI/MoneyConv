@@ -3,7 +3,11 @@ package com.hafizhnotes.currencyconversion.room.vo
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.hafizhnotes.currencyconversion.data.constant.DBConstant
+import com.hafizhnotes.currencyconversion.data.helper.TimestampConverter
+import java.time.OffsetDateTime
+import java.util.*
 
 @Entity(tableName = DBConstant.CURRENCY_LIVE_DB_NAME)
 class CurrencyLiveRoomResponse(
@@ -25,5 +29,8 @@ class CurrencyLiveRoomResponse(
     val timestamp: Int = 0,
 
     @ColumnInfo(name = DBConstant.CURRENCY_LIVE_COLUMN_CURRENCY_RATES)
-    val currencyRates: String = ""
+    val currencyRates: String = "",
+
+    @ColumnInfo(name = DBConstant.CURRENCY_LIVE_COLUMN_CREATED_AT)
+    val createdAt: Date = Calendar.getInstance(TimeZone.getTimeZone("IST")).time
 )

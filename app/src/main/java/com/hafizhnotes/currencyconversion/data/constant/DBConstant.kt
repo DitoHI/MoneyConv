@@ -10,6 +10,7 @@ object DBConstant {
     const val CURRENCY_LIVE_COLUMN_TERMS = "terms"
     const val CURRENCY_LIVE_COLUMN_TIMESTAMP = "timestamp"
     const val CURRENCY_LIVE_COLUMN_CURRENCY_RATES = "CURRENCY_RATES"
+    const val CURRENCY_LIVE_COLUMN_CREATED_AT = "CREATED_AT"
 
     const val CURRENCY_LIST_DB_NAME = "currency_list_table"
     const val CURRENCY_LIST_COLUMN_CURRENCIES = "currencies"
