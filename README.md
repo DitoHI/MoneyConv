@@ -18,8 +18,8 @@ The Prerequisites are:
 Screenshots
 ---------------
 
-![Exchange Currency] (screenshots/phone_exchange_currency.png "Exchange Currency")
-![Currency Rates] (screenshots/phone_currency_rates.png "Currency Rates")
+![Exchange Currency] (screenshots/phone_exchange_currency.png)
+![Currency Rates] (screenshots/phone_currency_rates.png)
 
 Features
 ---------------
@@ -30,7 +30,7 @@ Features
 Common Error in Prerequisites
 ---------------
 
-* `new gradle sync is not supported due to containing kotlin modules`
+* `new gradle sync is not supported due to containing kotlin modules` <br />
 Go to __Preferences__ - __Kotlin Compiler__ then change __Target JVM version__ to 1.8.
 
 Acknowledgment
