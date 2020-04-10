@@ -18,16 +18,9 @@ data class CurrencyListResponse(
     @SerializedName("terms")
     val terms: String = ""
 ) {
-    fun toRoomResponse(): CurrencyListRoomResponse {
-        return CurrencyListRoomResponse(
-            privacy = privacy,
-            success = success,
-            terms = terms,
-            currencies = Gson().toJson(currencies)
-        )
-    }
 
     companion object {
+
         fun fromRoomResponse(roomResponse: CurrencyListRoomResponse): CurrencyListResponse {
             return CurrencyListResponse(
                 privacy = roomResponse.privacy,
@@ -36,5 +29,14 @@ data class CurrencyListResponse(
                 currencies = Gson().fromJson(roomResponse.currencies, JsonObject::class.java)
             )
         }
+    }
+
+    fun toRoomResponse(): CurrencyListRoomResponse {
+        return CurrencyListRoomResponse(
+            privacy = privacy,
+            success = success,
+            terms = terms,
+            currencies = Gson().toJson(currencies)
+        )
     }
 }

@@ -13,6 +13,7 @@ class CurrencyListDataSource(
     private val apiService: CurrencyLayerInterface,
     private val compositeDisposable: CompositeDisposable
 ) {
+
     private val _networkState = MutableLiveData<NetworkState>()
     val networkState: LiveData<NetworkState>
         get() = _networkState

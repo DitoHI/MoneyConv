@@ -15,6 +15,7 @@ import com.mikepenz.iconics.Iconics
 private const val NUM_PAGES = 2
 
 class MainActivity : FragmentActivity() {
+
     lateinit var viewPagerHome: ViewPager2
     val bundle = Bundle()
 

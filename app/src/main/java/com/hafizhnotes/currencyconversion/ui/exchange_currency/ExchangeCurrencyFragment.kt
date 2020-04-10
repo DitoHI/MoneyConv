@@ -41,6 +41,7 @@ import java.util.*
 
 
 class ExchangeCurrencyFragment : Fragment() {
+
     private lateinit var rootView: View
     private lateinit var repository: ExchangeCurrencyRepository
     private lateinit var viewModel: ExchangeCurrencyViewModel
@@ -57,6 +58,7 @@ class ExchangeCurrencyFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         rootView =
             inflater.inflate(R.layout.fragment_exchange_currency, container, false)
@@ -101,6 +103,7 @@ class ExchangeCurrencyFragment : Fragment() {
 
 
     private fun onBindStart(liveResponse: CurrencyLiveResponse) {
+
         // Setup UI if screen clicked
         // then remove the focus of text field.
         setupUI(rootView)
@@ -283,7 +286,7 @@ class ExchangeCurrencyFragment : Fragment() {
             .sp_currency_to
             .setSelection(currencyLabels.indexOf(toCurrencyDefault))
 
-        // Swipe the currency.
+        // Swap the currency.
         rootView.ibtn_swap_currency.setOnClickListener {
             val currencyFrom = rootView.sp_currency_from.selectedItem.toString()
             val currencyFromValue = rootView.et_currency_from.text

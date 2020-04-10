@@ -163,12 +163,14 @@ class CurrentRatesFragment : Fragment() {
         // doesn't get duplicated.
         it.currencyRates.remove("$source$source")
 
-        val adapter = CurrencyRateAdapter(
-            context = rootView.context,
-            source = source,
-            sourceSum = sourceValue,
-            liveResponse = it
-        )
+        val adapter =
+            CurrencyRateAdapter(
+                context = rootView.context,
+                source = source,
+                sourceSum = sourceValue,
+                liveResponse = it
+            )
+
         rootView.rv_currency_rates.adapter = adapter
     }
 

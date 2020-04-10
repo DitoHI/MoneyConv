@@ -8,6 +8,7 @@ import com.hafizhnotes.currencyconversion.data.vo.CurrencyLiveResponse
 import io.reactivex.disposables.CompositeDisposable
 
 class CurrencyRatesRepository(private val apiService: CurrencyLayerInterface) {
+
     private lateinit var currencyLivesDataSource: CurrencyLiveDataSource
 
     fun fetchSingleCurrencyLive(

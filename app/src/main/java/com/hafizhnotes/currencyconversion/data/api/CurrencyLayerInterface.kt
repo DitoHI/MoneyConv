@@ -6,6 +6,7 @@ import io.reactivex.Single
 import retrofit2.http.GET
 
 interface CurrencyLayerInterface {
+
     @GET("live")
     fun getCurrencyLive(): Single<CurrencyLiveResponse>
 

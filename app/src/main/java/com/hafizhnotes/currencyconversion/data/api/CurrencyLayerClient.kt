@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit
 const val API_KEY = "0dd749e64851c409f533a9c2f6abb258"
 
 object CurrencyLayerClient {
+
     fun getClient(): CurrencyLayerInterface {
         val requestInterceptor =
             Interceptor { chain ->

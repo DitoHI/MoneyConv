@@ -26,7 +26,9 @@ data class CurrencyLiveResponse(
     @SerializedName("quotes")
     var currencyRates: JsonObject = JsonObject()
 ) {
+
     companion object {
+
         fun fromRoomResponse(roomResponse: CurrencyLiveRoomResponse): CurrencyLiveResponse {
             return CurrencyLiveResponse(
                 privacy = roomResponse.privacy,

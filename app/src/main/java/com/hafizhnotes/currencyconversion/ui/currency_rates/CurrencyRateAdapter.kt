@@ -24,6 +24,7 @@ class CurrencyRateAdapter(
     private val liveResponse: CurrencyLiveResponse,
     private val sourceSum: Double = 1.0
 ) : RecyclerView.Adapter<CurrencyRateAdapter.ViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater
@@ -47,6 +48,7 @@ class CurrencyRateAdapter(
 
         @SuppressLint("SetTextI18n")
         fun setData(position: Int) {
+
             // Get destination currency.
             val currencyName = currencyNames[position]
             val destinationCurrency =
@@ -63,9 +65,6 @@ class CurrencyRateAdapter(
                     .substring(0, destinationCurrency.length - 1)
                     .toLowerCase(Locale.ROOT)
 
-            /**
-             * Bind the UI
-             */
             // Get the image url of country flags.
             val glideOptions =
                 RequestOptions()
@@ -90,10 +89,11 @@ class CurrencyRateAdapter(
             toFormat.maximumFractionDigits = 0
             toFormat.currency = Currency.getInstance(destinationCurrency.toUpperCase(Locale.ROOT))
 
-            // Currency Result
+            // Currency Result.
             val fromCurrencyAmount = fromFormat.format(sourceSum)
             val toCurrencyAmount = toFormat.format(rate)
 
+            // Bind the UI.
             itemView.tv_rate_currency_from.text = source.toUpperCase(Locale.ROOT)
             itemView.tv_rate_currency_from_sum.text = fromCurrencyAmount
             itemView.tv_rate_currency_to.text = destinationCountry.toUpperCase(Locale.ROOT)

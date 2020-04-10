@@ -9,6 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 class CurrencyRatesViewModel(
     private val ratesRepository: CurrencyRatesRepository
 ) : ViewModel() {
+
     private val compositeDisposable = CompositeDisposable()
 
     val currencyLive: LiveData<CurrencyLiveResponse> by lazy {
