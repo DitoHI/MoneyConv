@@ -18,8 +18,8 @@ The Prerequisites are:
 Screenshots
 ---------------
 
-![Exchange Currency] (screenshots/phone_exchange_currency.png)
-![Currency Rates] (screenshots/phone_currency_rates.png)
+![Exchange Currency](screenshots/phone_exchange_currency.png)
+![Currency Rates](screenshots/phone_currency_rates.png)
 
 Features
 ---------------
