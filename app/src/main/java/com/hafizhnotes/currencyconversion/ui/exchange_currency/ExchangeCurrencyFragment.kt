@@ -48,8 +48,9 @@ class ExchangeCurrencyFragment : Fragment() {
     private lateinit var roomViewModel: ExchangeCurrencyRoomViewModel
     private lateinit var rateRoomViewModel: CurrencyRatesRoomViewModel
 
-    private var fromCurrencyDefault = "SGD - Singapore Dollar"
-    private val toCurrencyDefault = "IDR - Indonesian Rupiah"
+    private var currencyLabels = listOf<String>()
+    private var fromCurrencyDefault = "USD - United States Dollar"
+    private val toCurrencyDefault = "JPY - Japanese Yen"
 
     private var isUpdatedViaApi = false
     private var isUpdatedViaLocal = false
@@ -249,7 +250,7 @@ class ExchangeCurrencyFragment : Fragment() {
     }
 
     private fun onBindUI(it: CurrencyListResponse) {
-        val currencyLabels =
+        currencyLabels =
             it.currencies.keySet().map { currency ->
                 val name = it
                     .currencies
@@ -288,15 +289,15 @@ class ExchangeCurrencyFragment : Fragment() {
 
         // Swap the currency.
         rootView.ibtn_swap_currency.setOnClickListener {
+            rootView.et_currency_to.text.clear()
+
             val currencyFrom = rootView.sp_currency_from.selectedItem.toString()
-            val currencyFromValue = rootView.et_currency_from.text
             val currencyTo = rootView.sp_currency_to.selectedItem.toString()
             val currencyToValue = rootView.et_currency_to.text
 
             rootView.sp_currency_from.setSelection(currencyLabels.indexOf(currencyTo))
             rootView.et_currency_from.text = currencyToValue
             rootView.sp_currency_to.setSelection(currencyLabels.indexOf(currencyFrom))
-            rootView.et_currency_to.text = currencyFromValue
         }
     }
 
