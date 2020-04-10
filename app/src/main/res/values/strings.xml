@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Smart Currency Converter</string>
+    <string name="app_name">MoneyConv</string>
 
     <string name="tab_exchange_currency">Exchange Currency</string>
     <string name="tab_currency_rates">Currency Rates</string>
